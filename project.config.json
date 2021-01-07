@@ -1,19 +1,21 @@
 {
-	"miniprogramRoot": "miniprogram/",
-	"cloudfunctionRoot": "cloudfunctions/",
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true,
-		"enhance": true
+		"newFeature": true
 	},
-	"appid": "wx81aa0c5cb0d8115f",
-	"projectname": "sports-%E8%BF%90%E5%8A%A8%E7%A4%BE%E4%BA%A4%E5%88%86%E4%BA%AB",
-	"libVersion": "2.8.1",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"compileType": "miniprogram",
+	"libVersion": "2.2.5",
+	"appid": "",
+	"projectname": "%E4%B8%AA%E4%BA%BA%E7%9B%B8%E5%86%8C",
+	"isGameTourist": false,
+	"cloudfunctionRoot": "cloud/functions/",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -28,33 +30,35 @@
 			"list": []
 		},
 		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
+			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide",
+					"name": "评论",
+					"pathName": "pages/review/review",
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "pages/edit/edit",
-					"pathName": "pages/edit/edit",
-					"query": "",
-					"scene": null
+					"id": 1,
+					"name": "编辑",
+					"pathName": "pages/detail/detail",
+					"query": "url=https://tcb-def7de.tcb.qcloud.la/1531733018488-1224544.png"
+				},
+				{
+					"id": 2,
+					"name": "相册详情页",
+					"pathName": "pages/photos/photos",
+					"query": "id=0"
 				},
 				{
 					"id": -1,
-					"name": "pages/show/show",
-					"pathName": "pages/show/show",
-					"scene": null
+					"name": "上传图片",
+					"pathName": "pages/photos/add",
+					"query": ""
 				}
 			]
 		}
