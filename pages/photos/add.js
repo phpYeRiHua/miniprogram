@@ -12,12 +12,12 @@ Page({
         albums: [],
         photosOrigin: [],
         photosNew: [],
-        newphotos_url:[],
+        newphotos_url: [],
         index: ''
     },
 
     // 获取原相册的的内容
-    onLoad (options) {
+    onLoad(options) {
         this.setData({
             albumIndex: options.id,
             photosOrigin: app.globalData.allData.albums[options.id].photos
@@ -25,8 +25,10 @@ Page({
     },
 
     // 提交表单
-    formSubmit (e) {
-        wx.showLoading({ title: '加载中' })
+    formSubmit(e) {
+        wx.showLoading({
+            title: '加载中'
+        })
 
         // 并发上传图片
         const uploadTasks = this.data.photosNew.map(item => this.uploadPhoto(item.src))
@@ -35,7 +37,10 @@ Page({
             wx.hideLoading()
         }).catch(() => {
             wx.hideLoading()
-            wx.showToast({ title: '上传图片错误', icon: 'error' })
+            wx.showToast({
+                title: '上传图片错误',
+                icon: 'error'
+            })
         })
     },
 
@@ -56,18 +61,24 @@ Page({
                     })
                 }
 
-                this.setData({ photosNew: items })
+                this.setData({
+                    photosNew: items
+                })
             }
         })
     },
 
     // 上传图片
-    uploadPhoto (filePath) {
+    uploadPhoto(filePath) {
         // 在此插入上传图片代码
+        return wx.cloud.uploadFile({
+            cloudPath: `${Date.now()}-${Math.floor(Math.random(0, 1) * 10000000)}.png`,
+            filePath
+        })
     },
 
     // 预览图片
-    previewImage (e) {
+    previewImage(e) {
         const current = e.target.dataset.src
         const photos = this.data.photosNew.map(photo => photo.src)
 
@@ -78,7 +89,7 @@ Page({
     },
 
     // 删除图片
-    cancel (e) {
+    cancel(e) {
         const index = e.currentTarget.dataset.index
         const photos = this.data.photosNew.filter((p, idx) => idx !== index)
 
@@ -88,7 +99,7 @@ Page({
     },
 
     // 添加图片信息到数据库
-    addPhotos (photos, comment) {
+    addPhotos(photos, comment) {
         const db = wx.cloud.database()
         // 从全局数据中读出用户信息里的照片列表
         const oldPhotos = app.globalData.allData.albums[this.data.albumIndex].photos
@@ -101,5 +112,13 @@ Page({
         app.globalData.allData.albums[this.data.albumIndex].photos = [...oldPhotos, ...albumPhotos]
 
         // 在此插入储存图片信息代码
+        db.collection('user').doc(app.globalData.id).update({
+            data: {
+                albums: db.command.set(app.globalData.allData.albums)
+            }
+        }).then(result => {
+            console.log('写入成功', result)
+            wx.navigateBack()
+        })
     }
 })
